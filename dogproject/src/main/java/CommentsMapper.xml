@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="resource.CommentsMapper">
+	<select id="listAll" resultType="model.vo.CommentsVO">
+		select nickname,to_char(WRITEDATE,'yyyy.mm.dd. hh24:mi') writedate,content,id,cnum 
+		from comments order by cnum
+	</select>
+	
+	<insert id="insert" parameterType="model.vo.CommentsVO">
+		insert into comments
+		values(#{nickname},sysdate,#{content},#{id},comments_seq.nextval)
+	</insert>
+	
+	<select id="boardcom" parameterType="int" resultType="model.vo.CommentsVO">
+		select nickname,to_char(WRITEDATE,'yyyy.mm.dd. hh24:mi') writedate,content,id,cnum 
+		from comments where id=#{id} order by cnum
+	</select>
+	
+	<delete id="delete" parameterType="int">
+		delete from comments where cnum=#{cnum} and id=#{id}
+	</delete>
+	
+	<update id="update" parameterType="model.vo.CommentsVO">
+		update comments set
+			content = #{content},
+			writedate = sysdate
+		where cnum=#{cnum} and id=#{id}
+	</update>
+</mapper>

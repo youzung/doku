@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="resource.DogMapper">
+	<!-- listAll  -->
+ 	<select id="selectPetMember"  resultType="model.vo.PetMemberVO"> 
+    	select * from petmember
+ 	</select>
+ 	
+ 	<!-- insert  -->
+	<insert id="insertPetMember"  parameterType="model.vo.PetMemberVO">			
+    		INSERT INTO PETMEMBER
+    		values (#{id}, #{email}, #{pwd}, #{pwdchk}, #{name}, 
+    		#{nickname}, #{address}, #{pet}, 0 , 0)
+	</insert>	
+	
+	<!--  checkId -->
+	<select id="checkId" parameterType="string" resultType="model.vo.PetMemberVO">
+		select id from petmember where id = #{id}
+	</select> 
+	
+	<!--  checkNickname -->
+	<select id="checkNickname" parameterType="string" resultType="model.vo.PetMemberVO">
+		select nickname from petmember where nickname = #{nickname}
+	</select> 
+	
+	<!-- login -->
+	<select id="login" parameterType="string" resultType="model.vo.PetMemberVO">
+		select * from petmember where id=#{id} and pwd=#{pwd}
+	</select>
+	
+	<!-- update -->
+	<update id="updateinfo" parameterType="model.vo.PetMemberVO">
+		update petmember set 
+			pwd = #{pwd},
+			pwdchk = #{pwdchk},
+			email = #{email},
+			address = #{address},
+			pet = #{pet}
+		where id = #{id}
+	</update>
+ 	
+ 	<!-- delete -->
+ 	<delete id="deleteinfo" parameterType="string">
+ 		delete from petmember where id = #{id}
+ 	</delete>
+
+	<!-- update postcnt -->
+ 	<update id="updatepostcnt" parameterType="string">
+ 		update petmember set
+ 			postcnt = postcnt+1
+ 		where nickname = #{nickname}
+ 	</update>  
+ 	
+</mapper>
+
+ 
+ 

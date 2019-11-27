@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="resource.CalendarMapper">
+ 	<!-- listAll -->
+ 	
+ 	<select id="selectEvent" resultType="model.vo.CalendarVO">
+ 		select id, title,to_char(startDate,'yyyy-mm-dd') startdate ,to_char(endDate+1,'yyyy-mm-dd') enddate, nickname from calendar where nickname = #{nickname}
+ 	</select>
+ 	
+ 	<!-- insert  -->
+
+	<insert id="insertEvent"  parameterType="model.vo.CalendarVO">	
+		<selectKey resultType="String" keyProperty="id" order="BEFORE">
+			select cal_seq.nextval from dual
+		</selectKey>		
+    		insert into calendar values ('a'||#{id}, #{title}, #{startDate}, #{endDate}, #{nickname})
+	</insert>	
+	
+ 	<!-- delete --> 
+ 	<delete id="deleteEvent" parameterType="String">
+ 		delete from calendar where id = #{id}
+ 	</delete> 	
+</mapper>
